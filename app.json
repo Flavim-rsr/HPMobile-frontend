@@ -1,0 +1,27 @@
+{
+  "expo": {
+    "name": "HelpTap",
+    "slug": "helptap-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "platforms": ["ios", "android"],
+    "scheme": "helptap",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "plugins": ["expo-router"],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "ios": {
+      "supportsTablet": false
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#F5F7ED"
+      }
+    },
+    "extra": {
+      "router": {}
+    }
+  }
+}
