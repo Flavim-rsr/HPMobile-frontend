@@ -6,4 +6,5 @@ export const routes = {
   mainMenu: "/main-menu",
   personalData: "/personal-data",
   emergencyContact: "/emergency-contact",
+  weather: "/weather",
 } as const;

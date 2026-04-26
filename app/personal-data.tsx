@@ -9,6 +9,7 @@ import { AppScreen } from "@/components/AppScreen";
 import { AppText } from "@/components/AppText";
 import { routes } from "@/constants/routes";
 import { colors, radius, spacing } from "@/theme";
+import { formatBirthDate, formatPhone } from "@/utils/userInput";
 
 export default function PersonalDataScreen() {
   const [fullName, setFullName] = useState("");
@@ -16,6 +17,7 @@ export default function PersonalDataScreen() {
   const [password, setPassword] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [birthDate, setBirthDate] = useState("");
+  const [phone, setPhone] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [street, setStreet] = useState("");
   const [number, setNumber] = useState("");
@@ -56,8 +58,22 @@ export default function PersonalDataScreen() {
           rightIcon={isPasswordVisible ? "eye-off-outline" : "eye-outline"}
           onRightIconPress={() => setIsPasswordVisible((current) => !current)}
         />
-        <AppInput label="Telefone" placeholder="(00) 00000-0000" value={birthDate} onChangeText={setBirthDate} keyboardType="number-pad" />
-        <AppInput label="Data de nascimento" placeholder="DD/MM/AAAA" value={birthDate} onChangeText={setBirthDate} keyboardType="number-pad" />
+        <AppInput
+          label="Telefone"
+          placeholder="00 00000-0000"
+          value={phone}
+          onChangeText={(value) => setPhone(formatPhone(value))}
+          keyboardType="number-pad"
+          maxLength={13}
+        />
+        <AppInput
+          label="Data de nascimento"
+          placeholder="DD/MM/AAAA"
+          value={birthDate}
+          onChangeText={(value) => setBirthDate(formatBirthDate(value))}
+          keyboardType="number-pad"
+          maxLength={10}
+        />
         <AppInput label="CEP" placeholder="00000-000" value={zipCode} onChangeText={setZipCode} keyboardType="number-pad" />
         <AppInput label="Endereço" placeholder="Rua, avenida ou travessa" value={street} onChangeText={setStreet} />
         <AppInput label="Número" placeholder="123" value={number} onChangeText={setNumber} keyboardType="number-pad" />

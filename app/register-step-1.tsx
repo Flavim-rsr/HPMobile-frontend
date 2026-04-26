@@ -9,7 +9,10 @@ import { AppInput } from "@/components/AppInput";
 import { AppScreen } from "@/components/AppScreen";
 import { AppText } from "@/components/AppText";
 import { routes } from "@/constants/routes";
+import { registerUser } from "@/services/api";
+import { setRegisteredUser } from "@/services/session";
 import { colors, radius, spacing } from "@/theme";
+import { formatBirthDate, formatCpf, getErrorMessage, onlyDigits, toIsoDate } from "@/utils/userInput";
 
 export default function RegisterStepOneScreen() {
   const [fullName, setFullName] = useState("");
@@ -18,6 +21,38 @@ export default function RegisterStepOneScreen() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [cpf, setCpf] = useState("");
   const [birthDate, setBirthDate] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function handleRegister() {
+    const cleanCpf = onlyDigits(cpf);
+    const nextPassword = password.trim();
+
+    if (!fullName.trim() || !email.trim() || !nextPassword || !cleanCpf || !birthDate.trim()) {
+      setErrorMessage("Preencha nome, e-mail, senha, CPF e data de nascimento.");
+      return;
+    }
+
+    try {
+      setErrorMessage("");
+      setIsLoading(true);
+      const user = await registerUser({
+        fullName: fullName.trim(),
+        email: email.trim().toLowerCase(),
+        password: nextPassword,
+        cpf: cleanCpf,
+        dateBirth: toIsoDate(birthDate),
+        identifier: cleanCpf,
+        role: "PATIENT",
+      });
+      setRegisteredUser(user);
+      router.replace(routes.mainMenu);
+    } catch (error) {
+      setErrorMessage(getErrorMessage(error));
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
     <AppScreen>
@@ -38,22 +73,57 @@ export default function RegisterStepOneScreen() {
 
       <View style={styles.form}>
         <AppInput label="Nome completo" placeholder="Digite seu nome" value={fullName} onChangeText={setFullName} />
-        <AppInput label="E-mail" placeholder="seuemail@exemplo.com" value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" />
+        <AppInput
+          label="E-mail"
+          placeholder="seuemail@exemplo.com"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
         <AppInput
           label="Senha"
           placeholder="*****"
           value={password}
           onChangeText={setPassword}
           secureTextEntry={!isPasswordVisible}
+          autoCapitalize="none"
+          autoCorrect={false}
           leftIcon="lock-closed-outline"
           rightIcon={isPasswordVisible ? "eye-off-outline" : "eye-outline"}
           onRightIconPress={() => setIsPasswordVisible((current) => !current)}
         />
-        <AppInput label="CPF" placeholder="000.000.000-00" value={cpf} onChangeText={setCpf} keyboardType="number-pad" />
-        <AppInput label="Data de nascimento" placeholder="DD/MM/AAAA" value={birthDate} onChangeText={setBirthDate} keyboardType="number-pad" />
+        <AppInput
+          label="CPF"
+          placeholder="000.000.000-00"
+          value={cpf}
+          onChangeText={(value) => setCpf(formatCpf(value))}
+          keyboardType="number-pad"
+          maxLength={14}
+        />
+        <AppInput
+          label="Data de nascimento"
+          placeholder="DD/MM/AAAA"
+          value={birthDate}
+          onChangeText={(value) => setBirthDate(formatBirthDate(value))}
+          keyboardType="number-pad"
+          maxLength={10}
+        />
       </View>
 
-      <AppButton title="Continuar" onPress={() => router.push(routes.registerStepTwo)} style={styles.button} />
+      {errorMessage ? (
+        <AppText variant="body" color={colors.error} center>
+          {errorMessage}
+        </AppText>
+      ) : null}
+
+      <AppButton
+        title={isLoading ? "Cadastrando..." : "Cadastrar"}
+        onPress={handleRegister}
+        loading={isLoading}
+        style={styles.button}
+      />
     </AppScreen>
   );
 }

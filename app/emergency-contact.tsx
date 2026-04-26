@@ -10,6 +10,7 @@ import { AppSelect } from "@/components/AppSelect";
 import { AppText } from "@/components/AppText";
 import { routes } from "@/constants/routes";
 import { colors, spacing } from "@/theme";
+import { formatPhone } from "@/utils/userInput";
 
 const relationshipOptions = [
   { label: "Mãe", value: "mae" },
@@ -51,7 +52,14 @@ export default function EmergencyContactScreen() {
           options={relationshipOptions}
           onChange={setRelationship}
         />
-        <AppInput label="Telefone" placeholder="(00) 00000-0000" value={phone} onChangeText={setPhone} keyboardType="phone-pad" />
+        <AppInput
+          label="Telefone"
+          placeholder="00 00000-0000"
+          value={phone}
+          onChangeText={(value) => setPhone(formatPhone(value))}
+          keyboardType="phone-pad"
+          maxLength={13}
+        />
         <AppInput label="Nome do contato alternativo" placeholder="Digite o nome completo" value={alternateContactName} onChangeText={setAlternateContactName} />
         <AppSelect
           label="Parentesco alternativo"
@@ -60,7 +68,14 @@ export default function EmergencyContactScreen() {
           options={relationshipOptions}
           onChange={setAlternateRelationship}
         />
-        <AppInput label="Telefone alternativo" placeholder="(00) 00000-0000" value={alternatePhone} onChangeText={setAlternatePhone} keyboardType="phone-pad" />
+        <AppInput
+          label="Telefone alternativo"
+          placeholder="00 00000-0000"
+          value={alternatePhone}
+          onChangeText={(value) => setAlternatePhone(formatPhone(value))}
+          keyboardType="phone-pad"
+          maxLength={13}
+        />
       </View>
 
       <AppButton title="Salvar contato" onPress={() => router.replace(routes.mainMenu)} style={styles.button} />

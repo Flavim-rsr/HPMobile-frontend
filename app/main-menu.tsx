@@ -5,11 +5,15 @@ import { AppScreen } from "@/components/AppScreen";
 import { AppText } from "@/components/AppText";
 import { MenuCard } from "@/components/MenuCard";
 import { routes } from "@/constants/routes";
+import { clearSession, getCurrentUser } from "@/services/session";
 import { colors, radius, spacing } from "@/theme";
 
 const logoImage = require("../assets/images/logo.png");
 
 export default function MainMenuScreen() {
+  const user = getCurrentUser();
+  const userName = user?.fullName || "Paciente";
+
   return (
     <AppScreen scroll={false}>
       <View style={styles.topArea}>
@@ -20,7 +24,7 @@ export default function MainMenuScreen() {
               Olá,
             </AppText>
             <AppText variant="label" color={colors.black}>
-              Rafael Andrade
+              {userName}
             </AppText>
           </View>
         </View>
@@ -47,10 +51,19 @@ export default function MainMenuScreen() {
           onPress={() => router.push(routes.emergencyContact)}
         />
         <MenuCard
+          title="Clima"
+          subtitle="Temperatura, vento e condição atual"
+          icon="partly-sunny-outline"
+          onPress={() => router.push(routes.weather)}
+        />
+        <MenuCard
           title="Sair"
           subtitle="Voltar para a tela inicial"
           icon="log-out-outline"
-          onPress={() => router.replace(routes.welcome)}
+          onPress={() => {
+            clearSession();
+            router.replace(routes.welcome);
+          }}
         />
       </View>
     </AppScreen>

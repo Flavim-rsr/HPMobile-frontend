@@ -16,13 +16,15 @@ export function AppScreen({ children, scroll = true, style, ...props }: AppScree
   return (
     <SafeAreaView style={styles.safeArea}>
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.keyboard}
       >
         {scroll ? (
           <ScrollView
             contentContainerStyle={styles.scrollContent}
+            contentInsetAdjustmentBehavior="automatic"
             keyboardShouldPersistTaps="handled"
+            keyboardDismissMode="interactive"
             showsVerticalScrollIndicator={false}
           >
             {content}
@@ -45,10 +47,11 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
+    paddingBottom: spacing.xl,
   },
   content: {
     flex: 1,
     paddingHorizontal: spacing.lg,
-    paddingBottom: spacing.lg,
+    paddingBottom: spacing.xl,
   },
 });

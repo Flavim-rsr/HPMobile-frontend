@@ -16,6 +16,8 @@
       "supportsTablet": false
     },
     "android": {
+      "softwareKeyboardLayoutMode": "resize",
+      "package": "com.flavim.helptapmobile",
       "adaptiveIcon": {
         "backgroundColor": "#F5F7ED"
       }

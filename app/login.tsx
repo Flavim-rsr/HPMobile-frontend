@@ -7,7 +7,10 @@ import { AppInput } from "@/components/AppInput";
 import { AppScreen } from "@/components/AppScreen";
 import { AppText } from "@/components/AppText";
 import { routes } from "@/constants/routes";
+import { login } from "@/services/api";
+import { setLoginSession } from "@/services/session";
 import { colors, spacing } from "@/theme";
+import { getErrorMessage } from "@/utils/userInput";
 
 const logoImage = require("../assets/images/logo.png");
 
@@ -15,6 +18,30 @@ export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  async function handleLogin() {
+    const nextEmail = email.trim().toLowerCase();
+    const nextPassword = password.trim();
+
+    if (!nextEmail || !nextPassword) {
+      setErrorMessage("Informe e-mail e senha para entrar.");
+      return;
+    }
+
+    try {
+      setErrorMessage("");
+      setIsLoading(true);
+      const session = await login(nextEmail, nextPassword);
+      setLoginSession(session);
+      router.replace(routes.mainMenu);
+    } catch (error) {
+      setErrorMessage(getErrorMessage(error));
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
     <AppScreen style={styles.screen}>
@@ -38,6 +65,7 @@ export default function LoginScreen() {
           onChangeText={setEmail}
           keyboardType="email-address"
           autoCapitalize="none"
+          autoCorrect={false}
           leftIcon="mail-outline"
         />
         <AppInput
@@ -46,16 +74,25 @@ export default function LoginScreen() {
           value={password}
           onChangeText={setPassword}
           secureTextEntry={!isPasswordVisible}
+          autoCapitalize="none"
+          autoCorrect={false}
           leftIcon="lock-closed-outline"
           rightIcon={isPasswordVisible ? "eye-off-outline" : "eye-outline"}
           onRightIconPress={() => setIsPasswordVisible((current) => !current)}
         />
       </View>
 
+      {errorMessage ? (
+        <AppText variant="body" color={colors.error} center>
+          {errorMessage}
+        </AppText>
+      ) : null}
+
       <View style={styles.actions}>
         <AppButton
-          title="Entrar"
-          onPress={() => router.replace(routes.mainMenu)}
+          title={isLoading ? "Entrando..." : "Entrar"}
+          onPress={handleLogin}
+          loading={isLoading}
           style={styles.primaryButton}
         />
         <Pressable onPress={() => router.push(routes.registerStepOne)} style={styles.link}>

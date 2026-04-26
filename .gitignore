@@ -1,11 +1,15 @@
 node_modules/
 .expo/
 dist/
+.expo-shared/
 
 # Native/build output
 android/
 ios/
 web-build/
+build/
+*.apk
+*.aab
 
 # Logs
 npm-debug.log*
@@ -14,11 +18,23 @@ yarn-error.log*
 pnpm-debug.log*
 expo-start*.log
 
+# Archives/local exports
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
 # OS/editor
 .DS_Store
 Thumbs.db
 .idea/
 .vscode/
+
+# Codex/agent local files
+.codex
+.codex/
+.codex-*/
+.agents/
 
 # Environment
 .env
