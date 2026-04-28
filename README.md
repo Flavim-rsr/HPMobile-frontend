@@ -111,11 +111,19 @@ Executa a verificação de tipos do TypeScript.
 
 ## API
 
+## API
+
+O aplicativo mobile se conecta ao backend **HPWeather-backEnd** ([repositório do backend](https://github.com/RafaelAndrade25/HPWeather-backEnd)), desenvolvido com Java 21, Spring Boot 3 e PostgreSQL. O backend fornece o gerenciamento de usuários, a autenticação e a integração com a API de clima Open-Meteo.
+
 Base URL:
 
 ```text
 https://hpweather-backend.onrender.com
 ```
+
+**Resumo do Consumo do Backend:**
+- **Autenticação e Usuários:** O sistema utiliza tokens JWT para segurança. O app realiza o login em `/api/auth/web/login` (ou `/api/auth/mobile/login`) para obter o token, que deve ser enviado no header `Authorization: Bearer <token>` em requisições protegidas. O cadastro de usuários ocorre no endpoint `/api/users`.
+- **Clima / Tempo:** Ao chamar a rota `/api/weather?latitude={lat}&longitude={lon}`, o backend consome internamente a API aberta do **Open-Meteo** e repassa os dados da previsão e estado atual do clima para o aplicativo mobile.
 
 Endpoints utilizados:
 
