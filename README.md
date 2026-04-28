@@ -111,8 +111,6 @@ Executa a verificação de tipos do TypeScript.
 
 ## API
 
-## API
-
 O aplicativo mobile se conecta ao backend **HPWeather-backEnd** ([repositório do backend](https://github.com/RafaelAndrade25/HPWeather-backEnd)), desenvolvido com Java 21, Spring Boot 3 e PostgreSQL. O backend fornece o gerenciamento de usuários, a autenticação e a integração com a API de clima Open-Meteo.
 
 Base URL:
