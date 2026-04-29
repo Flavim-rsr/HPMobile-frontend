@@ -111,7 +111,7 @@ Executa a verificação de tipos do TypeScript.
 
 ## API
 
-O aplicativo mobile se conecta ao backend **HPWeather-backEnd** (https://github.com/RafaelAndrade25/HPWeather-backEnd), desenvolvido com Java 21, Spring Boot 3 e PostgreSQL. O backend fornece o gerenciamento de usuários, a autenticação e a integração com a API de clima Open-Meteo.
+O aplicativo mobile se conecta ao backend **HPWeather-backEnd** [(Repositório)](https://github.com/RafaelAndrade25/HPWeather-backEnd), desenvolvido com Java 21, Spring Boot 3 e PostgreSQL. O backend fornece o gerenciamento de usuários, a autenticação e a integração com a API de clima Open-Meteo.
 
 Base URL:
 
@@ -282,35 +282,38 @@ npx eas-cli build -p android --profile preview
 
 Ao finalizar, o EAS vai gerar um link para download do APK.
 
-## Prints da Aplicação
+## Prints da Aplicação partes do trabalho de PROGRAMAÇÃO PARA DISPOSITIVOS MÓVEIS I
 
-Adicione aqui os prints do app depois:
+<table align="center">
+  <tr>
+    <td>
+      <img src="https://github.com/user-attachments/assets/83724e7f-d21f-4828-adbb-343cba371b86" width="250"/>
+    </td>
+    <td>
+      <img src="https://github.com/user-attachments/assets/b25f88d5-37f8-4317-af0d-fa5d097b3b84" width="250"/>
+    </td>
+    <td>
+      <img src="https://github.com/user-attachments/assets/79c8dd79-94de-4dfc-a17f-bde490b69be0" width="250"/>
+    </td>
+  </tr>
+</table>
 
-```text
-assets/docs/print-home.png
-assets/docs/print-login.png
-assets/docs/print-cadastro.png
-assets/docs/print-menu.png
-assets/docs/print-clima.png
-```
+## Prints da Aplicação partes que seram usadas no TCC 
 
-Exemplo de uso no README:
-
-```md
-![Tela inicial](assets/docs/print-home.png)
-![Tela de login](assets/docs/print-login.png)
-![Tela de cadastro](assets/docs/print-cadastro.png)
-![Menu principal](assets/docs/print-menu.png)
-![Tela de clima](assets/docs/print-clima.png)
-```
+<table align="center">
+  <tr>
+    <td>
+      <img src="https://github.com/user-attachments/assets/82911348-0d73-48c8-8416-f25800e28254" width="250"/>
+    </td>
+    <td>
+      <img src="https://github.com/user-attachments/assets/a5f76f05-d7b0-4152-90ff-ad4eafbd41f4" width="250"/>
+    </td>
+  </tr>
+</table>
 
 ## Link para Download do APK
 
-Adicione aqui o link do Google Drive depois que o APK for gerado:
-
-```text
-Link do APK: <ADICIONAR_LINK_DO_GOOGLE_DRIVE>
-```
+📱 [Download do APK](https://drive.google.com/file/d/1chdmS8cX0WICl0mHEtpp-ZyvcVckzGu8/view?usp=drive_link)
 
 ## Observações
 
