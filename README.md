@@ -313,7 +313,7 @@ Ao finalizar, o EAS vai gerar um link para download do APK.
 
 ## Link para Download do APK
 
-📱 [Download do APK](https://drive.google.com/file/d/1chdmS8cX0WICl0mHEtpp-ZyvcVckzGu8/view?usp=drive_link)
+📱 [Download do APK](https://drive.google.com/file/d/1J5W2wtLCdE9Ffxw018_cS6dnD9YZMeTg/view?usp=drive_link)
 
 ## Observações
 
