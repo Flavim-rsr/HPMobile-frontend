@@ -67,13 +67,62 @@ export function toIsoDate(value: string) {
 export function getErrorMessage(error: unknown) {
   if (error && typeof error === "object" && "message" in error) {
     const message = String(error.message);
+    const status = "status" in error ? Number(error.status) : undefined;
+    const translatedMessage = translateApiMessage(message, status);
 
-    if (message === "Network request failed") {
-      return "Nao foi possivel conectar ao servidor. Verifique a internet do celular e tente novamente.";
-    }
-
-    return message;
+    return translatedMessage || message;
   }
 
   return "Nao foi possivel conectar ao servidor. Tente novamente.";
+}
+
+function translateApiMessage(message: string, status?: number) {
+  const normalized = message.trim().toLowerCase();
+
+  if (!normalized) {
+    return "Nao foi possivel concluir a solicitacao. Tente novamente.";
+  }
+
+  if (normalized === "network request failed") {
+    return "Nao foi possivel conectar ao servidor. Verifique a internet do celular e tente novamente.";
+  }
+
+  if (
+    status === 401 ||
+    normalized.includes("bad credentials") ||
+    normalized.includes("invalid credentials") ||
+    normalized.includes("unauthorized") ||
+    normalized.includes("incorrect password") ||
+    normalized.includes("wrong password") ||
+    normalized.includes("user not found")
+  ) {
+    return "E-mail ou senha incorretos. Verifique os dados e tente novamente.";
+  }
+
+  if (
+    status === 409 ||
+    normalized.includes("already exists") ||
+    normalized.includes("already registered") ||
+    normalized.includes("duplicate") ||
+    normalized.includes("email already") ||
+    normalized.includes("cpf already")
+  ) {
+    return "Ja existe um cadastro com esses dados. Verifique o e-mail ou CPF informado.";
+  }
+
+  if (
+    status === 400 ||
+    normalized.includes("validation") ||
+    normalized.includes("invalid") ||
+    normalized.includes("must not") ||
+    normalized.includes("required")
+  ) {
+    return "Confira os dados informados e tente novamente.";
+  }
+
+  if (status && status >= 500) {
+    return "O servidor encontrou um problema. Tente novamente em alguns instantes.";
+  }
+
+  return "";
 }
